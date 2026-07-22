@@ -66,6 +66,14 @@ footer.site{border-top:1px solid var(--line);margin-top:36px;padding:26px 0 44px
 font-size:13px;color:var(--muted)}
 footer.site p{margin-bottom:8px}
 footer.site .sig{font-family:var(--mono);font-size:12px}
+.capture{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:14px 0 4px}
+.capture label{font-family:var(--mono);font-size:12px;color:var(--teal);
+letter-spacing:1px;width:100%}
+.capture input[type=email]{flex:1;min-width:220px;padding:11px 14px;
+border:1px solid var(--line);border-radius:10px;background:#fff;
+color:var(--ink);font-size:15px}
+.capture input[type=email]:focus{outline:2px solid var(--teal)}
+.capture button{cursor:pointer;border:0}
 @media(max-width:640px){.hero h1{font-size:28px}.buybar{flex-direction:column;
 align-items:flex-start}}
 </style>
@@ -89,6 +97,18 @@ align-items:flex-start}}
   </div>
   <p class="note">The buy button activates the moment the Gumroad listing is staged (fehu_seller) — no rebuild needed beyond one weaver pulse.</p>
   <div class="disclosure"><strong>Transparency:</strong> This pack was created with AI-assisted generative design tools (procedural geometry rendered to vector line art) under the seller&#x27;s creative direction, disclosed per Etsy&#x27;s Creativity Standards. Every page was programmatically verified and visually reviewed before listing.</div>
+</div></section>
+<section id="free-sample"><div class="wrap">
+  <h2><span class="tag">// free sample</span>Get 3 free pages</h2>
+  <div class="card">
+    <p>Three actual pages from the Fehu Lab coloring packs — the Fehu wealth-rune mandala, the serpent-coil knotwork medallion, and the star-tetrahedron construction — as one printable US Letter PDF. Join the list and it lands in your inbox; after the welcome email you only hear about real product news. No spam, unsubscribe anytime.</p>
+    <form class="capture" method="post">
+      <label for="capture-email">EMAIL</label>
+      <input id="capture-email" type="email" name="email" required placeholder="you@example.com" autocomplete="email">
+      <button class="btn" type="submit">Send me the free pages</button>
+    </form>
+    <p class="note" id="capture-note"><strong>Honest status:</strong> email capture is not wired yet — the owner still has to connect the email provider (a one-line edit; runbook staged in bots/fehu_broadcaster/runbooks/). Until then this form sends and stores nothing.</p>
+  </div>
 </div></section>
 <section id="previews"><div class="wrap"><h2><span class="tag">// previews</span>Actual pages, unretouched</h2><div class="gallery"><figure><figcaption>actual page preview</figcaption></figure><figure><figcaption>actual page preview</figcaption></figure><figure><figcaption>actual page preview</figcaption></figure><figure><figcaption>actual page preview</figcaption></figure><figure><figcaption>actual page preview</figcaption></figure><figure><figcaption>actual page preview</figcaption></figure></div></div></section>
 <section id="inside"><div class="wrap">
@@ -137,5 +157,23 @@ align-items:flex-start}}
      listed above. Fehu Lab total real revenue to date: $0.00 — this page is
      part of changing that honestly.</p>
 </div></footer>
+<script>
+// FORM_ENDPOINT: paste the email provider's form-action URL here (one-line
+// edit) — see research/email-lane.md. Empty = capture not wired: the form
+// honestly refuses to submit and stores nothing.
+const FORM_ENDPOINT = '';
+(function () {
+  var f = document.querySelector('form.capture');
+  if (!f) return;
+  if (FORM_ENDPOINT) f.setAttribute('action', FORM_ENDPOINT);
+  f.addEventListener('submit', function (e) {
+    if (!f.getAttribute('action')) {
+      e.preventDefault();
+      var n = document.getElementById('capture-note');
+      if (n) n.innerHTML = '<strong>Not wired yet</strong> — the owner still has to connect the email provider, so nothing was sent. The 3 free pages go live here as soon as it is.';
+    }
+  });
+})();
+</script>
 </body>
 </html>

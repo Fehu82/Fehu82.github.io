@@ -1,11 +1,44 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Fehu Lab — Store</title>
 <style>body{font-family:Georgia,serif;background:#faf7f2;color:#2b2622;max-width:760px;margin:4em auto;padding:0 1.2em;line-height:1.6}
 h1{font-size:1.9em;letter-spacing:.02em} h1 span{color:#9a6b3f} a.card{display:block;border:1px solid #ddd3c4;border-radius:10px;padding:1.1em 1.3em;margin:1em 0;text-decoration:none;color:inherit;background:#fff}
-a.card:hover{border-color:#9a6b3f} .price{color:#9a6b3f;font-weight:bold} small{color:#7d746a}</style></head><body>
+a.card:hover{border-color:#9a6b3f} .price{color:#9a6b3f;font-weight:bold} small{color:#7d746a}
+.freebie{border:1px solid #ddd3c4;border-radius:10px;padding:1.2em 1.3em;margin:2em 0;background:#fff}
+.freebie h2{margin:0 0 .4em;font-size:1.25em}
+.freebie form{display:flex;flex-wrap:wrap;gap:.6em;margin:.9em 0 .5em}
+.freebie input[type=email]{flex:1;min-width:200px;padding:.6em .8em;border:1px solid #ddd3c4;border-radius:8px;font-size:1em;font-family:inherit}
+.freebie button{padding:.6em 1.2em;border:0;border-radius:8px;background:#9a6b3f;color:#fff;font-size:1em;font-family:inherit;cursor:pointer}
+.freebie button:hover{background:#7e5533}</style></head><body>
 <h1>ᚠ Fehu Lab <span>Store</span></h1>
 <p>Printable coloring books and research playbooks. New products land here first.</p>
+<div class="freebie">
+  <h2>Get 3 free pages</h2>
+  <p>Three actual pages from the Fehu Lab coloring packs — the Fehu wealth-rune mandala, the serpent-coil knotwork medallion, and the star-tetrahedron construction — as one printable US Letter PDF. Join the list and it lands in your inbox; after the welcome email you only hear about real product news. No spam, unsubscribe anytime.</p>
+  <form class="capture" method="post">
+    <input type="email" name="email" required placeholder="you@example.com" autocomplete="email" aria-label="Email address">
+    <button type="submit">Send me the free pages</button>
+  </form>
+  <p id="capture-note"><small><b>Honest status:</b> email capture is not wired yet — the owner still has to connect the email provider (a one-line edit; runbook staged in bots/fehu_broadcaster/runbooks/). Until then this form sends and stores nothing.</small></p>
+</div>
 <a class="card" href="rune-coloring-pack/"><b>Rune Mandalas — Viking Knotwork Coloring Book</b> <span class="price">$7</span><br><small>30 printable rune-mandala pages, US Letter PDF</small></a>
 <a class="card" href="sacred-geometry-coloring-pack/"><b>Sacred Geometry Coloring Book</b> <span class="price">$6</span><br><small>30 printable geometry pages, US Letter PDF</small></a>
 <a class="card" href="night-drift-playbook/"><b>The Night-Drift Playbook</b> <span class="price">$9 launch</span><br><small>Overnight-drift research playbook + reproducible backtest script</small></a>
 <p><small>Built by the Fehu Lab bot fleet. AI-assisted products, disclosed on every listing.</small></p>
+<script>
+// FORM_ENDPOINT: paste the email provider's form-action URL here (one-line
+// edit) — see research/email-lane.md. Empty = capture not wired: the form
+// honestly refuses to submit and stores nothing.
+const FORM_ENDPOINT = '';
+(function () {
+  var f = document.querySelector('form.capture');
+  if (!f) return;
+  if (FORM_ENDPOINT) f.setAttribute('action', FORM_ENDPOINT);
+  f.addEventListener('submit', function (e) {
+    if (!f.getAttribute('action')) {
+      e.preventDefault();
+      var n = document.getElementById('capture-note');
+      if (n) n.innerHTML = '<small><b>Not wired yet</b> — the owner still has to connect the email provider, so nothing was sent. The 3 free pages go live here as soon as it is.</small>';
+    }
+  });
+})();
+</script>
 </body></html>
