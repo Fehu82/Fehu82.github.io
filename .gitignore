@@ -1,0 +1,28 @@
+# Secrets — never commit. The Kimi/Moonshot key lives here, in this file only.
+.env
+.env.*
+!.env.example
+
+# Private side of the Obsidian vault: real revenue, subscriber counts, anything
+# that should not be on a public GitHub Pages repo forever. Only the README is
+# tracked, so the directory exists in a fresh clone.
+vault/private/*
+!vault/private/README.md
+
+# Obsidian per-machine state. The vault content is tracked; the workspace is not.
+vault/.obsidian/workspace*
+vault/.obsidian/cache
+vault/.obsidian/plugins/
+vault/.trash/
+
+# THE PRODUCTS. assets/packs/ holds the built pack PDFs — the exact files
+# buyers pay for. This repo is public, so committing them would give the whole
+# catalogue away for free. Build them locally, upload to Gumroad, never commit.
+assets/packs/
+assets/source-pdfs/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
