@@ -1,4 +1,9 @@
 User-agent: *
 Allow: /
 
+# Working files, not storefront pages. Keeping them out of the index so thin
+# markdown does not compete with the product listings for the same domain.
+Disallow: /vault/
+Disallow: /tools/
+
 Sitemap: https://fehu82.github.io/sitemap.xml

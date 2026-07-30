@@ -1,0 +1,26 @@
+# Secrets — never commit. The Kimi/Moonshot key lives here, in this file only.
+.env
+.env.*
+!.env.example
+
+# Private side of the Obsidian vault: real revenue, subscriber counts, anything
+# that should not be on a public GitHub Pages repo forever. Only the README is
+# tracked, so the directory exists in a fresh clone.
+vault/private/*
+!vault/private/README.md
+
+# Obsidian per-machine state. The vault content is tracked; the workspace is not.
+vault/.obsidian/workspace*
+vault/.obsidian/cache
+vault/.obsidian/plugins/
+vault/.trash/
+
+# Product source files and rendered previews are large binaries; commit
+# deliberately, not by accident.
+assets/source-pdfs/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
