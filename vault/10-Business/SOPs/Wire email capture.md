@@ -14,16 +14,52 @@ exists, the copy exists, the form exists — only the endpoint is missing.
 
 ## What is in place
 
-All seven pages carry the same capture form and the same one-line switch:
+All seven pages carry the same capture form and load one shared module,
+`assets/capture.js`, with two constants at the top:
 
 ```js
-const FORM_ENDPOINT = '';
+const CAPTURE_TO = '';      // Mode A — zero signup
+const FORM_ENDPOINT = '';   // Mode B — a real provider
 ```
 
-Empty means the form refuses to submit and says so honestly. It never pretends to
-have captured an address it dropped.
+Both empty means the form refuses to submit and says so honestly. It never
+pretends to have captured an address it dropped. A honeypot field is injected
+into every form, so bots that fill it are silently discarded without a request.
 
-## Steps
+## Mode A — fastest, no account (about 2 minutes)
+
+FormSubmit relays each address to an inbox you already own. No signup, no
+dashboard, no card.
+
+1. Set one line in `assets/capture.js`:
+
+   ```js
+   const CAPTURE_TO = 'you+fehulab@gmail.com';
+   ```
+
+   Use a dedicated address or a `+` alias. **That address is visible in a public
+   file and harvesters will find it** — do not use your main one.
+
+2. Push, then submit the form once on the live site. FormSubmit emails you a
+   one-time confirmation link. Click it. Capture is live from that moment.
+
+3. After activating, FormSubmit gives you a **hashed endpoint** that hides the
+   address. Move it into `FORM_ENDPOINT` and clear `CAPTURE_TO`:
+
+   ```js
+   const CAPTURE_TO = '';
+   const FORM_ENDPOINT = 'https://formsubmit.co/ajax/<your-hash>';
+   ```
+
+**What this does not do:** it collects addresses, it does not send the welcome
+email or deliver the free-pages PDF. You reply by hand, or export and import into
+a real provider later. That is fine — it stops the bleeding today, and a list of
+50 addresses you email by hand beats a dead form.
+
+## Mode B — the real thing
+
+Worth doing once the list justifies it: these deliver the lead magnet and run the
+welcome sequence for you, which Mode A does not.
 
 1. **Pick a provider.** Any of these give a hosted form URL on a free tier:
    - **Kit (formerly ConvertKit)** — free to 10,000 subscribers, and it can
@@ -62,11 +98,20 @@ have captured an address it dropped.
 
 ## Definition of done
 
+Mode A (do this today):
+
+- [ ] `CAPTURE_TO` set to a dedicated address in `assets/capture.js`
+- [ ] Pushed, submitted once on the live site, confirmation link clicked
+- [ ] Hashed endpoint swapped into `FORM_ENDPOINT`, `CAPTURE_TO` cleared
+- [ ] "Not wired yet" copy replaced on all 7 pages
+- [ ] First subscriber count recorded in `vault/private/ledger.md`
+
+Mode B (when the list justifies it):
+
 - [ ] Provider account exists
 - [ ] `FORM_ENDPOINT` set in `assets/capture.js`
 - [ ] Free-pages PDF uploaded and delivering
-- [ ] "Not wired yet" copy replaced on all 7 pages
+- [ ] Mode A addresses exported and imported
 - [ ] Live end-to-end test passed with a real inbox
-- [ ] First subscriber count recorded in `vault/private/ledger.md`
 
 Related: [[Fehu Lab MOC]], [[Weekly review]]

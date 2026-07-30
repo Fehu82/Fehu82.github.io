@@ -53,7 +53,9 @@ Standard library only — nothing to install.
 
 ## Unfinished, in priority order
 
-1. **Email capture is not wired.** `assets/capture.js` needs a provider form URL.
+1. **Email capture is not wired.** Two ways to fix it, both one line in
+   `assets/capture.js`. The fast one needs no account at all: set `CAPTURE_TO`
+   to a dedicated address, push, submit once, click the confirmation link.
    Until then the form honestly refuses to submit and stores nothing. Runbook:
    `vault/10-Business/SOPs/Wire email capture.md`.
 2. **Previews are links, not images.** No page art has ever existed in this repo.
