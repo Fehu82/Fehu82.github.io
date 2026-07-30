@@ -61,6 +61,27 @@ def render_with_pymupdf(pdf: Path, pages: list[int], out_dir: Path, dpi: int) ->
     return written
 
 
+def optimise(paths: list[Path], target_width: int = 780) -> None:
+    """Shrink to web size and drop to greyscale.
+
+    These are black line art on white — full-colour RGB at print resolution is
+    several megabytes per page for no visible gain, and the storefront has to
+    load six of them.
+    """
+    try:
+        from PIL import Image  # type: ignore
+    except ImportError:
+        print("  (install Pillow to shrink previews for the web)")
+        return
+
+    for path in paths:
+        image = Image.open(path)
+        if image.width > target_width:
+            height = round(image.height * target_width / image.width)
+            image = image.resize((target_width, height), Image.LANCZOS)
+        image.convert("L").save(path, optimize=True)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -101,19 +122,10 @@ def main() -> int:
             )
             return 2
 
-    print(f"Rendered {len(written)} previews into {out_dir.relative_to(config.REPO_ROOT)}/\n")
-    print("Now replace the <div class=\"gallery\"> contents in "
-          f"{args.slug}/index.html with:\n")
-    for path in written:
-        page_number = path.stem.split("-")[1]
-        print(
-            f'<figure><img src="previews/{path.name}" loading="lazy" width="850" '
-            f'height="1100" alt="Page {int(page_number)} of {args.slug}, '
-            f'black line art on white, unretouched">'
-            f"<figcaption>page {int(page_number)}</figcaption></figure>"
-        )
-    print("\nThen drop the previews/ line from .gitignore's assets rule if needed "
-          "and commit the PNGs.")
+    optimise(written)
+    total_kb = sum(p.stat().st_size for p in written) / 1024
+    print(f"Rendered {len(written)} previews into "
+          f"{out_dir.relative_to(config.REPO_ROOT)}/  ({total_kb:.0f} KB total)")
     return 0
 
 

@@ -15,8 +15,10 @@ vault/.obsidian/cache
 vault/.obsidian/plugins/
 vault/.trash/
 
-# Product source files and rendered previews are large binaries; commit
-# deliberately, not by accident.
+# THE PRODUCTS. assets/packs/ holds the built pack PDFs — the exact files
+# buyers pay for. This repo is public, so committing them would give the whole
+# catalogue away for free. Build them locally, upload to Gumroad, never commit.
+assets/packs/
 assets/source-pdfs/
 
 # Python
