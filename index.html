@@ -166,7 +166,7 @@ footer.site .sig{font-family:var(--mono);font-size:12px}
       <input type="email" name="email" required placeholder="you@example.com" autocomplete="email" aria-label="Email address">
       <button type="submit">Send me the free pages</button>
     </form>
-    <p id="capture-note"><small><b>Honest status:</b> email capture is not wired yet — the owner still has to connect the email provider (a one-line edit; runbook staged in bots/fehu_broadcaster/runbooks/). Until then this form sends and stores nothing.</small></p>
+    <p id="capture-note"><small><b>Honest status:</b> email capture is not wired yet — the owner still has to connect the email provider (a one-line edit; runbook in the vault at Fehu-Lab/20-Marketing/email-capture-runbook.md). Until then this form sends and stores nothing. <b>No email needed:</b> <a href="free-sampler-pack/free-sampler-coloring-pages.pdf">download the 3-page sampler right now (PDF, 12&nbsp;KB)</a>.</small></p>
   </div>
   <div class="disclosure"><strong>Transparency:</strong> Fehu Lab products are built by the lab's bot fleet with AI-assisted generative design tools under the owner's creative direction, and are disclosed as such on every listing per Etsy's Creativity Standards. Every page was programmatically verified and visually reviewed before listing.</div>
 </div></section>
@@ -178,8 +178,9 @@ footer.site .sig{font-family:var(--mono);font-size:12px}
 </div></footer>
 <script>
 // FORM_ENDPOINT: paste the email provider's form-action URL here (one-line
-// edit) — see research/email-lane.md. Empty = capture not wired: the form
-// honestly refuses to submit and stores nothing.
+// edit) — runbook: Fehu-Lab/20-Marketing/email-capture-runbook.md.
+// Empty = capture not wired: the form honestly refuses to submit and stores
+// nothing; visitors get the sampler via the direct download link instead.
 const FORM_ENDPOINT = '';
 (function () {
   var f = document.querySelector('form.capture');
@@ -189,7 +190,7 @@ const FORM_ENDPOINT = '';
     if (!f.getAttribute('action')) {
       e.preventDefault();
       var n = document.getElementById('capture-note');
-      if (n) n.innerHTML = '<small><b>Not wired yet</b> — the owner still has to connect the email provider, so nothing was sent. The 3 free pages go live here as soon as it is.</small>';
+      if (n) n.innerHTML = '<small><b>Not wired yet</b> — the owner still has to connect the email provider, so nothing was sent or stored. The 3 free pages are ready right now: <a href="free-sampler-pack/free-sampler-coloring-pages.pdf">download the sampler PDF (12&nbsp;KB)</a>.</small>';
     }
   });
 })();
